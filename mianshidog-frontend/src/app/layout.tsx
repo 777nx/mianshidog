@@ -6,7 +6,7 @@ import "./globals.css";
 import { Provider, useDispatch } from "react-redux";
 import store, { AppDispatch } from "@/stores";
 import { getLoginUserUsingGet } from "@/api/userController";
-import { setLoginUser } from "@/stores/loginUser";
+import AccessLayout from "@/access/AccessLayout";
 
 /**
  * 全局初始化逻辑
@@ -25,14 +25,16 @@ const InitLayout: React.FC<
     if (res.data) {
       // 更新全局用户状态
     } else {
-      setTimeout(() => {
-        const testUser = {
-          userName: "测试登录",
-          id: 1,
-          userAvatar: "https://www.777nx.cn/logo.png",
-        };
-        dispatch(setLoginUser(testUser));
-      }, 3000);
+      // 仅用于测试
+      // setTimeout(() => {
+      //   const testUser = {
+      //     userName: "测试登录",
+      //     id: 1,
+      //     userAvatar: "https://www.777nx.cn/logo.png",
+      //     userRole: ACCESS_ENUM.ADMIN,
+      //   };
+      //   dispatch(setLoginUser(testUser));
+      // }, 3000);
     }
   }, []);
   // 只执行一次
@@ -53,7 +55,9 @@ export default function RootLayout({
         <AntdRegistry>
           <Provider store={store}>
             <InitLayout>
-              <BasicLayout>{children}</BasicLayout>
+              <BasicLayout>
+                <AccessLayout>{children}</AccessLayout>
+              </BasicLayout>
             </InitLayout>
           </Provider>
         </AntdRegistry>

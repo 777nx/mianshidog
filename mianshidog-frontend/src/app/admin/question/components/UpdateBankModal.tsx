@@ -1,4 +1,3 @@
-import { updateQuestionUsingPost } from "@/api/questionController";
 import { message, Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import Form from "antd/es/form/Form";
@@ -16,25 +15,6 @@ interface Props {
 }
 
 /**
- * 更新节点
- *
- * @param fields
- */
-const handleUpdate = async (fields: API.QuestionUpdateRequest) => {
-  const hide = message.loading("正在更新");
-  try {
-    await updateQuestionUsingPost(fields);
-    hide();
-    message.success("更新成功");
-    return true;
-  } catch (error: any) {
-    hide();
-    message.error("更新失败，" + error.message);
-    return false;
-  }
-};
-
-/**
  * 更新题目所属题库弹窗
  * @param props
  * @constructor
@@ -42,9 +22,9 @@ const handleUpdate = async (fields: API.QuestionUpdateRequest) => {
 const UpdateBankModal: React.FC<Props> = (props) => {
   const { questionId, visible, onCancel } = props;
   const [form] = Form.useForm();
-  const [questionBankList, setQuestionBankList] = useState<API.QuestionBankVO>(
-    [],
-  );
+  const [questionBankList, setQuestionBankList] = useState<
+    API.QuestionBankVO[]
+  >([]);
 
   // 获取所属题库列表
   const getCurrentQuestionBankIdList = async () => {

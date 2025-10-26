@@ -1,5 +1,6 @@
 package com.fantasy.mianshidog.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fantasy.mianshidog.common.DeleteRequest;
@@ -12,7 +13,6 @@ import com.fantasy.mianshidog.model.dto.post.PostUpdateRequest;
 import com.fantasy.mianshidog.model.entity.Post;
 import com.fantasy.mianshidog.model.entity.User;
 import com.fantasy.mianshidog.model.vo.PostVO;
-import com.fantasy.mianshidog.annotation.AuthCheck;
 import com.fantasy.mianshidog.common.BaseResponse;
 import com.fantasy.mianshidog.common.ErrorCode;
 import com.fantasy.mianshidog.common.ResultUtils;
@@ -107,7 +107,7 @@ public class PostController {
      * @return
      */
     @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @SaCheckRole(UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updatePost(@RequestBody PostUpdateRequest postUpdateRequest) {
         if (postUpdateRequest == null || postUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -153,7 +153,7 @@ public class PostController {
      * @return
      */
     @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @SaCheckRole(UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<Post>> listPostByPage(@RequestBody PostQueryRequest postQueryRequest) {
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();

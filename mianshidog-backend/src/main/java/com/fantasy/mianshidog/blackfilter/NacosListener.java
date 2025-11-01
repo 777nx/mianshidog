@@ -6,7 +6,6 @@ import com.alibaba.nacos.api.config.listener.Listener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.util.concurrent.Executor;
@@ -19,7 +18,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Nacos 监听器
  */
 @Slf4j
-@Component
+// todo 取消注释开启 Nacos（须先配置 Nacos）
+//@Component
 public class NacosListener implements InitializingBean {
 
     @NacosInjected

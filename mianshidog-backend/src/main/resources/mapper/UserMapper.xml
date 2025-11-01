@@ -18,11 +18,17 @@
         <result property="createTime" column="createTime"/>
         <result property="updateTime" column="updateTime"/>
         <result property="isDelete" column="isDelete"/>
+        <result property="phoneNumber" column="phoneNumber"/>
+        <result property="email" column="email"/>
+        <result property="grade" column="grade"/>
+        <result property="workExperience" column="workExperience"/>
+        <result property="expertiseDirection" column="expertiseDirection"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,userAccount,userPassword,unionId,mpOpenId,userName,
         userAvatar,userProfile,userRole,editTime,createTime,
-        updateTime,isDelete
+        updateTime,isDelete,phoneNumber,email,grade,
+        workExperience,expertiseDirection
     </sql>
 </mapper>

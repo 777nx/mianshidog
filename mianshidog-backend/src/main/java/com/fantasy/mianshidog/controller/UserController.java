@@ -3,6 +3,7 @@ package com.fantasy.mianshidog.controller;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fantasy.mianshidog.common.DeleteRequest;
+import com.fantasy.mianshidog.model.dto.user.*;
 import com.fantasy.mianshidog.model.entity.User;
 import com.fantasy.mianshidog.model.vo.LoginUserVO;
 import com.fantasy.mianshidog.model.vo.UserVO;
@@ -13,12 +14,6 @@ import com.fantasy.mianshidog.config.WxOpenConfig;
 import com.fantasy.mianshidog.constant.UserConstant;
 import com.fantasy.mianshidog.exception.BusinessException;
 import com.fantasy.mianshidog.exception.ThrowUtils;
-import com.fantasy.mianshidog.model.dto.user.UserAddRequest;
-import com.fantasy.mianshidog.model.dto.user.UserLoginRequest;
-import com.fantasy.mianshidog.model.dto.user.UserQueryRequest;
-import com.fantasy.mianshidog.model.dto.user.UserRegisterRequest;
-import com.fantasy.mianshidog.model.dto.user.UserUpdateMyRequest;
-import com.fantasy.mianshidog.model.dto.user.UserUpdateRequest;
 import com.fantasy.mianshidog.service.UserService;
 
 import java.util.List;
@@ -211,6 +206,30 @@ public class UserController {
         }
         User user = new User();
         BeanUtils.copyProperties(userUpdateRequest, user);
+        boolean result = userService.updateById(user);
+        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        return ResultUtils.success(true);
+    }
+
+    /**
+     * 编辑用户信息（支持用户和管理员）
+     *
+     * @param userEditRequest 编辑请求（包含需要更新的字段）
+     * @param request HTTP 请求
+     * @return 是否成功
+     */
+    @PostMapping("/edit")
+    public BaseResponse<Boolean> editUser(@RequestBody UserEditRequest userEditRequest, HttpServletRequest request) {
+        if (userEditRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 获取当前登录用户
+        User loginUser = userService.getLoginUser(request);
+        // 构建更新对象
+        User user = new User();
+        BeanUtils.copyProperties(userEditRequest, user);
+        // 如果是用户编辑自己，强制设置 ID 为当前用户 ID（防止越权修改）
+        user.setId(loginUser.getId());
         boolean result = userService.updateById(user);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);

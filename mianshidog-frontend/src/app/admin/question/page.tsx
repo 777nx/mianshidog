@@ -16,7 +16,7 @@ import MdEditor from "@/components/MdEditor";
 import UpdateBankModal from "@/app/admin/question/components/UpdateBankModal";
 import BatchAddQuestionsToBankModal from "@/app/admin/question/components/BatchAddQuestionsToBankModal";
 import BatchRemoveQuestionsFromBankModal from "@/app/admin/question/components/BatchRemoveQuestionsFromBankModal";
-import './index.css'
+import "./index.css";
 
 /**
  * 题目管理页面
@@ -291,6 +291,15 @@ const QuestionAdminPage: React.FC = () => {
           );
         }}
         toolBarRender={() => [
+          <Button
+            type="primary"
+            ghost
+            key="primary"
+            href="/admin/question/ai"
+            target="_blank"
+          >
+            <PlusOutlined /> AI 生成题目
+          </Button>,
           <Button
             type="primary"
             key="primary"

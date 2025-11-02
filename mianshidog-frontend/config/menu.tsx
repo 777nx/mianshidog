@@ -17,6 +17,10 @@ export const menus = [
     name: "题目",
   },
   {
+    path: "/mockInterview/add",
+    name: "AI模拟面试",
+  },
+  {
     name: "贝果研究家",
     path: "https://www.777nx.cn",
     target: "_blank",

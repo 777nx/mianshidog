@@ -150,7 +150,7 @@ public class QuestionController {
     public BaseResponse<QuestionVO> getQuestionVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 检测和处置爬虫（可以自行扩展为 - 登录后才能获取到答案）
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = userService.getLoginUserPermitNull(request);
         if (loginUser != null) {
             crawlerDetect(loginUser.getId());
         }
